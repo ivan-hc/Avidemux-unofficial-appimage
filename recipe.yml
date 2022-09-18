@@ -1,0 +1,7 @@
+app: avidemux
+binpatch: true
+ingredients:
+  dist: testing
+  sources:
+    - deb https://www.deb-multimedia.org testing main non-free
+    - deb http://ftp.us.debian.org/debian/ testing main contrib non-free
