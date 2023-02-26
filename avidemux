@@ -13,10 +13,10 @@ chmod a+x ./appimagetool ./pkg2appimage
 echo "app: avidemux
 binpatch: true
 ingredients:
-  dist: testing
+  dist: oldoldstable
   sources:
     - deb https://www.deb-multimedia.org testing main non-free
-    - deb http://ftp.us.debian.org/debian/ testing main contrib non-free" >> recipe.yml
+    - deb http://deb.debian.org/debian/ oldoldstable main contrib non-free" >> recipe.yml
 ./pkg2appimage recipe.yml
 
 rm ./$APP/$APP.AppDir/AppRun
