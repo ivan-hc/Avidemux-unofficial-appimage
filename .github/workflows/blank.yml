@@ -39,7 +39,7 @@ jobs:
             name: Avidemux-x86_64.AppImage
 
         - name: release
-          uses: svenstaro/upload-release-action@v2
+          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
           with:
             title: Continuous build
             automatic_release_tag: continuous
