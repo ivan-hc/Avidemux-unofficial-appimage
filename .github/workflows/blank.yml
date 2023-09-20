@@ -24,6 +24,8 @@ jobs:
         VERSION=$(curl -s https://deb-multimedia.org/dists/testing/main/binary-amd64/package/avidemux-qt | grep "Filename" | cut -c 48- | rev | cut -c 17- | rev)
         mv *AppImage dist/Avidemux-Unofficial-$VERSION-x86_64.AppImage
     - uses: gautamkrishnar/keepalive-workflow@v1
+      with:
+        gh_token: ${{ secrets.GH_TOKEN }}
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
