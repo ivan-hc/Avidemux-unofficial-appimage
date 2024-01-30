@@ -106,8 +106,8 @@ export QT_FONT_DPI=96
 CLI='/usr/bin/avidemux*cli'
 EXEC=$(grep -e '^Exec=.*' "${HERE}"/*.desktop | head -n 1 | cut -d "=" -f 2- | sed -e 's|%.||g')
 case "$1" in
-	'--cli'|'cli'|'--help'|'help'|'-h') $HERE/.local/share/junest/bin/junest -n -b "$ETC_RESOLV" 2> /dev/null -- $CLI "$@";;
-	''|*) $HERE/.local/share/junest/bin/junest -n -b "$ETC_RESOLV" 2> /dev/null -- $EXEC "$@";;
+	'--cli'|'cli'|'--help'|'help'|'-h') $HERE/.local/share/junest/bin/junest -n -b "$ETC_RESOLV" -- $CLI "$@";;
+	''|*) $HERE/.local/share/junest/bin/junest -n -b "$ETC_RESOLV" -- $EXEC "$@";;
 esac
 EOF
 chmod a+x ./AppRun
@@ -116,7 +116,8 @@ chmod a+x ./AppRun
 sed -i 's#${JUNEST_HOME}/usr/bin/junest_wrapper#${HOME}/.cache/junest_wrapper.old#g' ./.local/share/junest/lib/core/wrappers.sh
 sed -i 's/rm -f "${JUNEST_HOME}${bin_path}_wrappers/#rm -f "${JUNEST_HOME}${bin_path}_wrappers/g' ./.local/share/junest/lib/core/wrappers.sh
 sed -i 's/ln/#ln/g' ./.local/share/junest/lib/core/wrappers.sh
-sed -i 's#--bind "$HOME" "$HOME"#--bind /opt /opt --bind /usr/lib/locale /usr/lib/locale --bind /etc/profile /etc/profile --bind /usr/share/fonts /usr/share/fonts --bind /usr/share/themes /usr/share/themes --bind /mnt /mnt --bind /media /media --bind /home /home --bind /run/user /run/user#g' .local/share/junest/lib/core/namespace.sh
+sed -i 's#--bind "$HOME" "$HOME"#--bind /opt /opt --bind /usr/lib/locale /usr/lib/locale --bind /usr/share/fonts /usr/share/fonts --bind /usr/share/themes /usr/share/themes --bind /mnt /mnt --bind /media /media --bind /home /home --bind /run/user /run/user#g' .local/share/junest/lib/core/namespace.sh
+sed -i 's/rm -f "$file"/test -f "$file"/g' ./.local/share/junest/lib/core/wrappers.sh
 
 # EXIT THE APPDIR
 cd ..
@@ -168,7 +169,7 @@ for arg in $DEPS4; do
 done
 
 # REMOVE SOME BLOATWARES
-#rm -R .f ./$APP.AppDir/.cache/yay/*
+echo Y | rm -R .f ./$APP.AppDir/.cache/yay/*
 find ./$APP.AppDir/.junest/usr/share/doc/* -not -iname "*$BIN*" -a -not -name "." -delete #REMOVE ALL DOCUMENTATION NOT RELATED TO THE APP
 find ./$APP.AppDir/.junest/usr/share/locale/*/*/* -not -iname "*$BIN*" -a -not -name "." -delete #REMOVE ALL ADDITIONAL LOCALE FILES
 rm -R -f ./$APP.AppDir/.junest/etc/makepkg.conf
@@ -200,6 +201,7 @@ _savebins(){
 	mv ./$APP.AppDir/.junest/usr/bin/env ./save/
 	mv ./$APP.AppDir/.junest/usr/bin/sh ./save/
  	mv ./$APP.AppDir/.junest/usr/bin/tr ./save/
+   	mv ./$APP.AppDir/.junest/usr/bin/tty ./save/
 	for arg in $BINSAVED; do
 		for var in $arg; do
  			mv ./$APP.AppDir/.junest/usr/bin/*"$arg"* ./save/
@@ -347,4 +349,4 @@ mkdir -p ./$APP.AppDir/.junest/run/user
 
 # CREATE THE APPIMAGE
 ARCH=x86_64 ./appimagetool -n ./$APP.AppDir
-mv ./*AppImage ./"$(cat ./$APP.AppDir/*.desktop | grep 'Name=' | head -1 | cut -c 6- | sed 's/ /-/g')"_"$VERSION"-archimage3.1-x86_64.AppImage
+mv ./*AppImage ./"$(cat ./$APP.AppDir/*.desktop | grep 'Name=' | head -1 | cut -c 6- | sed 's/ /-/g')"_"$VERSION"-archimage3.2-x86_64.AppImage
