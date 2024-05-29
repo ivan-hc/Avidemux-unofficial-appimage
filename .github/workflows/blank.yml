@@ -21,7 +21,7 @@ jobs:
         chmod a+x ./avidemux
         sudo ./avidemux
         mkdir dist
-        VERSION=$(curl -s https://deb-multimedia.org/dists/testing/main/binary-amd64/package/avidemux-qt | grep "Filename" | cut -c 48- | rev | cut -c 17- | rev | sed 's/.git.*//')
+        VERSION=$(curl -s https://deb-multimedia.org/dists/testing/main/binary-amd64/package/avidemux-qt | grep "Filename" | cut -c 48- | rev | cut -c 17- | rev | sed 's/+.*//')
         mv *AppImage dist/Avidemux-Unofficial-$VERSION-x86_64.AppImage
 
     - name: Upload artifact
