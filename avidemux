@@ -30,8 +30,8 @@ ingredients:
 
   dist: stable
   sources:
-    - deb https://www.deb-multimedia.org testing main non-free
-    - deb http://deb.debian.org/debian/ stable main contrib non-free
+    - deb https://www.deb-multimedia.org testing main contrib non-free
+    - deb http://deb.debian.org/debian/ unstable main contrib non-free
   packages:
     - $APP" >> recipe.yml
 
