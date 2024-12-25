@@ -39,6 +39,15 @@ ingredients:
 # DOWNLOAD ALL THE NEEDED PACKAGES AND COMPILE THE APPDIR
 ./pkg2appimage ./recipe.yml
 
+# VERSION
+MAIN_DEB=$(find . -type f -name "$APP\_*.deb" | head -1 | sed 's:.*/::')
+if test -f ./"$APP"/"$MAIN_DEB"; then
+	ar x ./"$APP"/"$MAIN_DEB" && tar xf ./control.tar.* && rm -f ./control.tar.* ./data.tar.* || exit 1
+	VERSION=$(grep Version 0<control | cut -c 12- | tr '+' '\n' | head -1)
+else
+	VERSION="test"
+fi
+
 # LIBUNIONPRELOAD
 rm -f ./"$APP"/"$APP".AppDir/libunionpreload.so
 #wget -q https://github.com/project-portable/libunionpreload/releases/download/amd64/libunionpreload.so -O ./"$APP"/"$APP".AppDir/libunionpreload.so && chmod a+x ./"$APP"/"$APP".AppDir/libunionpreload.so || exit 1
@@ -147,6 +156,9 @@ cp ./"$APP"/"$APP".AppDir/usr/share/icons/hicolor/512x512/apps/*"$ICONNAME"* ./"
 cp ./"$APP"/"$APP".AppDir/usr/share/icons/hicolor/scalable/apps/*"$ICONNAME"* ./"$APP"/"$APP".AppDir/ 2>/dev/null
 cp ./"$APP"/"$APP".AppDir/usr/share/applications/*"$ICONNAME"* ./"$APP"/"$APP".AppDir/ 2>/dev/null
 
+# UNCOMMENT THE FOLLOWING LINE TO REMOVE FILES IN "METAINFO" IN CASE OF ERRORS WITH "APPSTREAM"
+rm -R -f ./"$APP"/"$APP".AppDir/usr/share/metainfo/*
+
 # EXPORT THE APP TO AN APPIMAGE
 printf '#!/bin/sh\nexit 0' > ./desktop-file-validate # hack due to https://github.com/AppImage/appimagetool/pull/47
 chmod a+x ./desktop-file-validate
@@ -154,4 +166,4 @@ PATH="$PATH:$PWD" ARCH=x86_64 ./appimagetool --comp zstd --mksquashfs-opt -Xcomp
 if ! test -f ./*.AppImage; then
 	echo "No AppImage available."; exit 1
 fi 
-cd .. && mv ./tmp/*.AppImage . && chmod a+x ./*.AppImage || exit 1
+cd .. && mv ./tmp/*.AppImage ./Avidemux-Unofficial-"$VERSION"-x86_64.AppImage && chmod a+x ./*.AppImage || exit 1
