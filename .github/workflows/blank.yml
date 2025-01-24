@@ -17,9 +17,10 @@ jobs:
     - name: build
       if: always()
       run: |
-        sudo apt update && sudo apt install desktop-file-utils
+        sudo apt update
+        sudo apt install desktop-file-utils
         chmod a+x ./avidemux-qt-junest.sh
-        sudo ./avidemux-qt-junest.sh
+        ./avidemux-qt-junest.sh
         mkdir dist
         mv *AppImage* dist/
 
@@ -28,9 +29,10 @@ jobs:
       with:
         name: Avidemux-x86_64.AppImage
         path: 'dist'
-   
+        
   release:
       needs: [build]
+      permissions: write-all
       runs-on: ubuntu-latest
 
       steps:
