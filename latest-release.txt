@@ -1,1 +1,1 @@
-https://github.com/ivan-hc/Avidemux-unofficial-appimage/releases/download/continuous/Avidemux_2.8.1-7-archimage4.3-x86_64.AppImage
+https://github.com/ivan-hc/Avidemux-unofficial-appimage/releases/download/continuous/Avidemux_2.8.1-8-archimage4.3-x86_64.AppImage
