@@ -268,10 +268,15 @@ _JUNEST_CMD() {
    "$HERE"/.local/share/junest/bin/junest $junest_options "$junest_bindings" "$@"
 }
 
+CLI=$(basename "$(find "$JUNEST_HOME"/usr/bin -name avidemux*cli)")
+
 EXEC=$(grep -e '^Exec=.*' "${HERE}"/*.desktop | head -n 1 | cut -d "=" -f 2- | sed -e 's|%.||g')
 if ! echo "$EXEC" | grep -q "/usr/bin"; then EXEC="/usr/bin/$EXEC"; fi
 
-_JUNEST_CMD -- $EXEC "$@"
+case "$1" in
+	'--cli'|'cli'|'--help'|'help'|'-h') _JUNEST_CMD -- /usr/bin/$CLI "$@";;
+	''|*) _JUNEST_CMD -- $EXEC "$@";;
+esac
 
 HEREDOC
 chmod a+x AppDir/AppRun
