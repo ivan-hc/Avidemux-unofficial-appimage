@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -x
-
 APP=avidemux-qt
 BIN="avidemux" #CHANGE THIS IF THE NAME OF THE BINARY IS DIFFERENT FROM "$APP" (for example, the binary of "obs-studio" is "obs")
 QTVER=$(curl -Ls https://archlinux.org/packages/extra/x86_64/avidemux-qt/ | tr '"><' '\n' | grep "^qt.*base$" | head -1)
