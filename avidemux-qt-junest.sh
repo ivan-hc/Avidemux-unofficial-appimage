@@ -2,7 +2,7 @@
 
 APP=avidemux-qt
 BIN="avidemux" #CHANGE THIS IF THE NAME OF THE BINARY IS DIFFERENT FROM "$APP" (for example, the binary of "obs-studio" is "obs")
-QTVER=$(curl -Ls https://archlinux.org/packages/extra/x86_64/avidemux-qt/ | tr '"><' '\n' | grep "^qt.*base$" | head -1)
+QTVER=$(curl -Ls "https://gitlab.archlinux.org/archlinux/packaging/packages/avidemux/-/raw/main/PKGBUILD" | tr '">< ' '\n' | grep "qt.*base" | head -1)
 [ -z "$QTVER" ] && exit 0; if [ "$QTVER" = qt5-base ]; then kvantumver="kvantum-qt5" qtctver="qt5ct" qtremoval="qt6 Qt6"; else kvantumver="kvantum" qtctver="qt6ct"; fi
 DEPENDENCES="avidemux-cli flac faac $kvantumver lame libfdk-aac opus libogg libpulse libvorbis $qtctver x264 x265" #SYNTAX: "APP1 APP2 APP3 APP4...", LEAVE BLANK IF NO OTHER DEPENDENCIES ARE NEEDED
 #BASICSTUFF="binutils debugedit gzip"
